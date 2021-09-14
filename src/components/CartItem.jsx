@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ShopContext } from '../context';
 
 function CartItem(props) {
-    const {
-        id,
-        name,
-        price,
-        count,
-        plusCountElement = Function.prototype,
-        minusCountElement = Function.prototype,
-        removeFromCart = Function.prototype,
-    } = props;
+    const { id, name, price, count } = props;
+    const { removeFromCart, plusCountElement, minusCountElement } =
+        useContext(ShopContext);
     return (
         <li className="collection-item">
             <div>
@@ -18,14 +13,14 @@ function CartItem(props) {
                     className="cart-count__controls"
                     onClick={() => plusCountElement(id)}
                 >
-                    <i class="material-icons">add</i>
+                    <i className="material-icons">add</i>
                 </span>
                 {count}{' '}
                 <span
                     className="cart-count__controls"
                     onClick={() => minusCountElement(id)}
                 >
-                    <i class="material-icons">remove</i>
+                    <i className="material-icons">remove</i>
                 </span>
                 = {price * count}
                 <span

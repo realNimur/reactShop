@@ -1,14 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ShopContext } from '../context';
 import CartItem from './CartItem';
 
-function CartList(props) {
-    const {
-        order,
-        handleBasketShow = Function.prototype,
-        removeFromCart = Function.prototype,
-        plusCountElement = Function.prototype,
-        minusCountElement = Function.prototype,
-    } = props;
+function CartList() {
+    const { order, handleCartShow } = useContext(ShopContext);
     let totalPrice = 0;
     if (order.length > 0) {
         totalPrice = order.reduce((sum, el) => sum + el.price * el.count, 0);
@@ -21,22 +16,14 @@ function CartList(props) {
                     Корзина
                     <span
                         className="secondary-content item-list__delete"
-                        onClick={handleBasketShow}
+                        onClick={handleCartShow}
                     >
                         <i className="material-icons">close</i>
                     </span>
                 </div>
             </li>
             {order.length ? (
-                order.map((item) => (
-                    <CartItem
-                        plusCountElement={plusCountElement}
-                        minusCountElement={minusCountElement}
-                        removeFromCart={removeFromCart}
-                        key={item.id}
-                        {...item}
-                    />
-                ))
+                order.map((item) => <CartItem key={item.id} {...item} />)
             ) : (
                 <li className="collection-item ">Корзина пуста</li>
             )}
@@ -44,8 +31,8 @@ function CartList(props) {
                 <div className="">Общая стоимость: {totalPrice} руб.</div>
             </li>
             <li className="collection-item ">
-                <button class="waves-effect waves-light btn-small">
-                    <i class="material-icons right">send</i>оформить
+                <button className="waves-effect waves-light btn-small">
+                    <i className="material-icons right">send</i>оформить
                 </button>
             </li>
         </ul>
